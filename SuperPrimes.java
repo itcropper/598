@@ -1,26 +1,26 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SuperPrimes {
+	
+	static StringBuilder sb;
 
 	public static void main(String[] args) {
 
 		long startTime = System.nanoTime();
+		
+		sb = new StringBuilder();
 		/*
 		 * System.out.println(1); System.out.println(2); getPrimes();
 		 */
-		List<Double> primes = calcPrimeNumbers(10000000);
-		StringBuilder sb = new StringBuilder();
-
-		for(int i = 0; i < primes.size(); i++){
-			if(i == primes.size() - 1){
-				sb.append(primes.get(i).intValue());
-			}
-			else
-				sb.append(primes.get(i).intValue() + "\n");
-		}
+		
+		double n = Math.pow(10, 7);
+		
+		calcPrimeNumbers(n);
 		
 		System.out.println(sb.toString());
+
 		//System.out.println("");
 		//System.out.println(Integer.MAX_VALUE);
 		//System.out.println(primes.size());
@@ -149,32 +149,36 @@ public class SuperPrimes {
 		return true;
 	}
 
-	public static List<Double> calcPrimeNumbers(double n) {
-		double[] isPrimeNumber = new double[(int) (n + 1)]; // boolean defaults
+	public static void calcPrimeNumbers(double n) {
+		BigInteger[] isPrimeNumber = new BigInteger[(int) (n + 1)]; // boolean defaults
 															// to
 		// false
 		List<Double> primes = new ArrayList<Double>();
 		List<Double> super_primes = new ArrayList<Double>();
 		// isPrimeNumber[0] =
+		
+		for(int i = 0; i < n; i++){
+			isPrimeNumber[(int) i] = BigInteger.ZERO;
+		}
 
 		for (double i = 2; i < n; i++) {
 			int v = primes.size();
-			if (isPrimeNumber[(int) i] == 0) {
+			if (isPrimeNumber[(int) i].equals(BigInteger.ZERO)) {
 				primes.add(i);
 				if (CheckPrime(primes.size()) && primes.size() > 1) {
 					
-					super_primes.add(i);
+					sb.append((int)i + "\n");
 					// Now mark the multiple of i as non-prime number
 
 				}
 				for (double j = i; j * i <= n; j++) {
-					isPrimeNumber[(int) (i * j)] = 1;
+					isPrimeNumber[(int) (i * j)] = BigInteger.ONE;
 				}
 			}
 
 		}
 		// System.out.println(primes.size());
-		return super_primes;
+
 	}
 
 }
